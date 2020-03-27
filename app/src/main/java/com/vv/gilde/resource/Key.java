@@ -1,17 +1,18 @@
 package com.vv.gilde.resource;
 
-import com.vv.gilde.utils.EncryptUtils;
+
+import com.vv.gilde.Tool;
 
 /**
- * @author ShenZhenWei
- * @date 2020-03-19
+ * key  ----->  Bitmap封装   === Value
  */
 public class Key {
-    //合格加密类型
-    private String key;
 
-    public Key(String key) {
-        this.key = EncryptUtils.encryptSHA256ToString(key);
+    private String key; // 合格：唯一 加密的  ac037ea49e34257dc5577d1796bb137dbaddc0e42a9dff051beee8ea457a4668
+
+
+    public Key(String path) {
+        this.key = Tool.getSHA256StrJava(path);
     }
 
     public String getKey() {

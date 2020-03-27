@@ -233,6 +233,7 @@ public class Tool {
     }
 
 
+
     // >>>>>>>>> Preconditions
 
     public static void checkArgument(boolean expression, @NonNull String message) {
@@ -278,10 +279,8 @@ public class Tool {
 
 
     // >>>>>>>>>>.
-
     /**
      * 利用java原生的摘要实现SHA256加密
-     *
      * @param str 加密后的报文
      * @return 最终的效果：唯一 加密的 ac037ea49e34257dc5577d1796bb137dbaddc0e42a9dff051beee8ea457a4668
      */
@@ -299,10 +298,8 @@ public class Tool {
         }
         return encodeStr;
     }
-
     /**
      * 将byte转为16进制
-     *
      * @param bytes
      * @return
      */

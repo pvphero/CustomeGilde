@@ -42,3 +42,37 @@ bitmap.getAllocationByteCount()复用红色区域的内存值 +黑色区域剩�
 活动缓存：正在使用的图片，都放在活动缓存（弱引用 GC没有使用了 已回收 被回收） 内存:lru
 管理 临时存放 活动缓存 不使用Value【资源封装 key value】
 
+Gilde在requestMange的时候为什么要发送handler？
+让fragment提交事务以后不在队列中，让他去进行干活
+
+总结： 第一次的时候，去网络下载图片，保存到磁盘缓存中  
+第二次的时候再直接再从活动缓存
+
+把APP杀掉
+整个活动缓存，整个内存缓存都没有了
+首次冷启动磁盘中加载
+
+### 1
+![avatar](./media/image/interview1.png)
+### 2 LRU---DiskLruCache,LruCache
+### 3 为什么有了内存缓存，还需要活动缓存？
+
+### 4 为什么Gilde一定要发一次handler
+
+队列里面有非常多的Messagequeue
+事务提交实际上源码是使用Handler提交添加到队列的
+
+### 5 活动缓存，用到了弱引用的监听
+
+### 6 gilde生命周期
+
+gilde是使用fragment的
+
+### 7 资源封装的引用计数
+
+游戏引擎 NDK用到了引用计数做功能
+
+### 8 Gilde缓存流程图
+
+
+

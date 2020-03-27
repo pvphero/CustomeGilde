@@ -4,7 +4,6 @@ import com.vv.gilde.resource.Value;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
 
 /**
  * @author ShenZhenWei
@@ -25,10 +24,12 @@ public class MemoryCacheTest {
 
         Value value = memoryCache.get("ac037dhsdsdsjhdshds");
         memoryCache.setMemoryCacheCallback(new MemoryCacheCallback() {
+
             @Override
-            public void entryRemoveMemoryCache(String key, Value oldValue) {
+            public void entryRemovedMemoryCache(String key, Value oldValue) {
                 System.out.println("被移除了" + oldValue);
             }
+
         });
     }
 

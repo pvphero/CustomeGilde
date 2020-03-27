@@ -5,17 +5,15 @@ import android.util.Log;
 
 import com.vv.gilde.Tool;
 
+
 /**
- * @author ShenZhenWei
- * @date 2020-03-19
- * <p>
  * Bitmap的封装
  */
 public class Value {
 
-    private static final String TAG = "Value";
-    //单例模式
-    //静态方法区的
+    private final static String TAG = Value.class.getSimpleName();
+
+    // 单例模式
     private static Value value;
 
     public static Value getInstance() {
@@ -29,11 +27,12 @@ public class Value {
         return value;
     }
 
-    private Bitmap mBitmap;
-    private int count;//使用计数
-    private ValueCallback callback;//监听回调
-    private String key;//标记唯一，加密的
+    private Bitmap mBitmap; // 位图
+    private int count; // 使用计数
+    private ValueCallback callback; // 监听回调
+    private String key; // key标记 唯一的
 
+    // TODO　下面是 Get Set 系列
     public static Value getValue() {
         return value;
     }
@@ -75,53 +74,57 @@ public class Value {
     }
 
 
-    //使用一次技术一次 +1
-
     /**
-     * 使用一次计数+1
+     * TODO 使用一次 计数一次 + 1
      */
     public void useAction() {
-        Tool.chechNotEmpty(mBitmap);
-        if (mBitmap.isRecycled()) {
-            Log.i(TAG, "useAction:已经被回收了");
+        Tool.checkNotEmpty(mBitmap); // 如果为null，就抛出异常
+
+        if (mBitmap.isRecycled()) { // 已经被回收了
+            Log.d(TAG, "useAction: 已经被回收了");
             return;
         }
-        Log.i(TAG, "useAction:加一");
+        Log.d(TAG, "useAction: 加一 count:" + count);
         count++;
-
-
-    }
-
-    //不使用一次，计数一次-1
-    public void nonUseAction() {
-        if (count-- <= 0) {
-            //证明value没有使用了（管理回收操作）
-            //告诉外界，回调接口
-            callback.valueNonUseListener(key, this);
-        }
-        Log.i(TAG, "nonUseAction:减一");
     }
 
     /**
-     * 释放
+     * TODO  不使用一次(使用完成) 计数一次 - 1
+     */
+    public void nonUseAction() {
+        // + 1 = 1
+        // - 1 = 0
+
+        count--;
+        if (count <= 0 && callback != null) {
+            // 证明我们的Value没有使用（管理回收）
+            // 告诉外界，回调接口
+            callback.valueNonUseListener(key, this); // 活动缓存管理监听
+        }
+        Log.d(TAG, "nonUseAction: 减一 count:" + count);
+    }
+
+    /**
+     * TODO　释放
      */
     public void recycleBitmap() {
-        if (count > 0) {
-            //正在使用中
-            Log.i(TAG, "recycleBitmap:引用计数大于0.。。正在使用中，不能释放");
+        if (count > 0) { // 正在使用中...
+            Log.d(TAG, "recycleBitmap: 引用计数大于0，正在使用中...，不能释放");
             return;
         }
 
         if (mBitmap.isRecycled()) {
-            Log.i(TAG, "recycleBitmap:引用计数大于0.。。已经被回收了，不能释放");
+            Log.d(TAG, "recycleBitmap: 都已经被回收了，不能释放");
             return;
         }
 
-        // TODO: 2020-03-19 自己增加校验
+        // 同学们自己增加
+        // ...
 
         mBitmap.recycle();
 
         value = null;
+
         System.gc();
     }
 
